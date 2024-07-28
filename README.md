@@ -18,7 +18,7 @@ pnpm install --filter=karin-plugin-parrot
 ### 安装CosyVoice
 请参考[CosyVoice](https://github.com/FunAudioLLM/CosyVoice)官方安装方法
 
-### 安装KarinSupport
+### 安装KarinSupport [可选]
 KarinSupport目前提供docker安装方法
 
 你可以从docker hub或aliyun下载镜像进行部署
@@ -42,6 +42,8 @@ docker run -d -p 7005:7005 [镜像ID]
 CosyVoice地址(API)：输入CosyVoice的访问地址，如果按照官方安装流程进行的安装并运行，可以在命令行中看到```Running on local URL:  http://127.0.0.1:50000```字样，此时配置项填写http://127.0.0.1:50000
 
 KarinSupport地址(Support)：输入Support的主页地址，假如你部署在本地7005端口，此时配置项填写http://127.0.0.1:7005/
+
+本地转码(LocalTranscod)：使用本地转码后将不再使用KarinSupport进行转码，默认使用本地
 
 ## 使用
 
