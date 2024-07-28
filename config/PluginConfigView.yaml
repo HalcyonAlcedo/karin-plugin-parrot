@@ -1,0 +1,17 @@
+-
+  # 配置文件描述
+  name: 星火配置
+  # 配置文件名
+  file: config.yaml
+  # 视图信息
+  view:
+    -
+      key: CosyVoice地址
+      comment: CosyVoiceAPI请求地址，例如http://127.0.0.1:50000/
+      path: 'API'
+      type: 'url'
+    -
+      key: KarinSupport地址
+      comment: KarinSupportAPI请求地址，例如http://127.0.0.1:7005/
+      path: 'Support'
+      type: 'url'

@@ -16,5 +16,11 @@
     "apps": [
       "lib/apps"
     ]
+  },
+  "devDependencies": {
+    "@gradio/client": "^1.4.0"
+  },
+  "imports": {
+    "#template": "./lib/imports/index.js"
   }
 }
