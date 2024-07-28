@@ -52,7 +52,6 @@ export const study = karin.command(/^#学舌/, async (e) => {
 export const recurrent = karin.command(/^:/, async (e) => {
   const msg = e.msg.replace(/^:/, '')
   // 如果没有配置则直接跳出
-  console.log(`./data/${basename}/list.yaml`)
   if (!fs.existsSync(`./data/${basename}/list.yaml`)) {
     return
   }

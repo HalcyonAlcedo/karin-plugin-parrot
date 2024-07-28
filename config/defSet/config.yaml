@@ -3,3 +3,6 @@ API:
 
 # KarinSupportAPI
 Support:
+
+# 本地转码
+LocalTranscod: true

@@ -11,6 +11,11 @@
       path: 'API'
       type: 'url'
     -
+      key: 本地转码
+      comment: 使用本地音频转码
+      path: 'LocalTranscod'
+      type: 'boolean'
+    -
       key: KarinSupport地址
       comment: KarinSupportAPI请求地址，例如http://127.0.0.1:7005/
       path: 'Support'
