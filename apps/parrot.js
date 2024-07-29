@@ -1,7 +1,8 @@
+import { uploadPrompt, generateAudio, getAudio } from "../lib/CosyVoice/index.js"
+import { modelInference } from "../lib/SenseVoice/index.js"
 import karin, { YamlEditor, segment } from 'node-karin'
+import { getRecord } from "../lib/common/index.js"
 import { Config, basename } from '#template'
-import { Client } from "@gradio/client"
-import { getRecord, uploadPrompt } from "../lib/CosyVoice/index.js"
 import fs from 'fs'
 
 export const study = karin.command(/^#学舌/, async (e) => {
@@ -24,9 +25,15 @@ export const study = karin.command(/^#学舌/, async (e) => {
         yamlEditor.save()
         return e.reply(`啾啾，${JSON.parse(yamlEditor.get(`files.${record.name}`)).uesr || '不知道是谁'}的声音，已经学会啦~`)
       }
+      // 获取音频内容
+      let prompt
+      if (msg) {
+        prompt = msg
+      } else {
+        prompt = (await modelInference(record.buffer, record.name))[0]
+      }
       // 上传数据
       const file = await uploadPrompt(record.buffer, record.name)
-      const prompt = msg
       // 写入prompt数据
       yamlEditor.add(`files.${record.name}`, JSON.stringify({
         path: file,
@@ -59,9 +66,7 @@ export const recurrent = karin.command(/^:/, async (e) => {
   const yamlEditor = new YamlEditor(`./data/${basename}/list.yaml`)
   const record = JSON.parse(yamlEditor.get(`files.${yamlEditor.get('config.record')}`))
   // 生成音频
-  const client = await Client.connect(Config.Config.API)
-  const result = await client.predict(
-    "/generate_audio", {
+  const result = await generateAudio({
     tts_text: msg,
     mode_checkbox_group: "3s极速复刻",
     sft_dropdown: "中文女",
@@ -79,9 +84,11 @@ export const recurrent = karin.command(/^:/, async (e) => {
     seed: 0,
     speed_factor: 1,
   })
+  // 获取音频数据
+  const audio = await getAudio(result.data[0].path, true)
   // 发送音频
   if (await e.bot.SendApi('can_send_record')) {
-    e.reply(segment.record(`file://${result.data[0].path}`))
+    e.reply(segment.record(`base64://${audio}`))
   } else {
     e.reply('诶~发不出来啊！')
   }

@@ -6,15 +6,20 @@
   # 视图信息
   view:
     -
+      key: 本地转码
+      comment: 使用本地音频转码
+      path: 'LocalTranscod'
+      type: 'boolean'
+    -
       key: CosyVoice地址
       comment: CosyVoiceAPI请求地址，例如http://127.0.0.1:50000/
       path: 'API'
       type: 'url'
     -
-      key: 本地转码
-      comment: 使用本地音频转码
-      path: 'LocalTranscod'
-      type: 'boolean'
+      key: SenseVoice地址
+      comment: SenseVoiceAPI请求地址，例如http://127.0.0.1:7860/
+      path: 'Sense'
+      type: 'url'
     -
       key: KarinSupport地址
       comment: KarinSupportAPI请求地址，例如http://127.0.0.1:7005/

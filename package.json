@@ -1,16 +1,16 @@
 {
   "name": "karin-plugin-parrot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "alcedo",
   "type": "module",
   "description": "Imitate others' audio to reply",
   "homepage": "https://github.com/HalcyonAlcedo/karin-plugin-parrot",
   "bugs": {
-    "url": "https://github.com/KarinJS/karin-plugin-parrot/issues"
+    "url": "https://github.com/HalcyonAlcedo/karin-plugin-parrot/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KarinJS/karin-plugin-parrot.git"
+    "url": "git+https://github.com/HalcyonAlcedo/karin-plugin-parrot.git"
   },
   "karin": {
     "apps": [
