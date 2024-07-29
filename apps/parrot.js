@@ -30,27 +30,31 @@ export const study = karin.command(/^#学舌/, async (e) => {
       if (msg) {
         prompt = msg
       } else {
-        prompt = (await modelInference(record.buffer, record.name))[0]
+        prompt = (await modelInference(record.buffer, record.name)).data[0]
       }
-      // 上传数据
-      const file = await uploadPrompt(record.buffer, record.name)
-      // 写入prompt数据
-      yamlEditor.add(`files.${record.name}`, JSON.stringify({
-        path: file,
-        name: record.name,
-        size: record.size,
-        prompt: prompt,
-        user: record.user
-      }))
-      // 设置prompt目标
-      if (yamlEditor.has('config.record')) {
-        yamlEditor.set('config.record', record.name)
+      if (prompt) {
+        // 上传数据
+        const file = await uploadPrompt(record.buffer, record.name)
+        // 写入prompt数据
+        yamlEditor.add(`files.${record.name}`, JSON.stringify({
+          path: file,
+          name: record.name,
+          size: record.size,
+          prompt: prompt,
+          user: record.user
+        }))
+        // 设置prompt目标
+        if (yamlEditor.has('config.record')) {
+          yamlEditor.set('config.record', record.name)
+        } else {
+          yamlEditor.add('config.record', record.name)
+        }
+        // 保存配置
+        yamlEditor.save()
+        return e.reply(`啾啾，${record.user}的声音，已经学会啦~`)
       } else {
-        yamlEditor.add('config.record', record.name)
+        return e.reply(`啾啾，听不懂~`)
       }
-      // 保存配置
-      yamlEditor.save()
-      return e.reply(`啾啾，${record.user}的声音，已经学会啦~`)
     }
   }
   return e.reply(`啾啾，没啥可学的~`)
