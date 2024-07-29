@@ -21,7 +21,7 @@ pnpm install --filter=karin-plugin-parrot
 ### 安装SenseVoice
 请参考[SenseVoice](https://github.com/FunAudioLLM/SenseVoice)官方安装方法
 
-### 安装KarinSupport
+### 安装KarinSupport [可选]
 > KarinSupport用于提供skil转码功能，默认使用本地转码可不安装此功能，如果本地转码无法正常运行，可尝试使用KarinSupport
 
 KarinSupport目前提供docker安装方法
@@ -49,6 +49,8 @@ CosyVoice地址(API)：输入CosyVoice的访问地址，如果按照官方安装
 SenseVoice地址(Sense)：输入SenseVoice的访问地址，如果按照官方安装流程进行的安装并运行，可以在命令行中看到```Running on local URL:  http://127.0.0.1:7860```字样，此时配置项填写http://127.0.0.1:7860
 
 KarinSupport地址(Support)：输入Support的主页地址，假如你部署在本地7005端口，此时配置项填写http://127.0.0.1:7005/
+
+本地转码(LocalTranscod)：使用本地转码后将不再使用KarinSupport进行转码，默认使用本地
 
 ## 使用
 
