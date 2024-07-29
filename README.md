@@ -22,7 +22,7 @@ pnpm install --filter=karin-plugin-parrot
 请参考[SenseVoice](https://github.com/FunAudioLLM/SenseVoice)官方安装方法
 
 ### 安装KarinSupport [可选]
-> KarinSupport用于提供skil转码功能，默认使用本地转码可不安装此功能，如果本地转码无法正常运行，可尝试使用KarinSupport
+> KarinSupport用于提供silk转码功能，默认使用本地转码可不安装此功能，如果本地转码无法正常运行，可尝试使用KarinSupport
 
 KarinSupport目前提供docker安装方法
 
