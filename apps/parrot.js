@@ -3,6 +3,7 @@ import { modelInference } from "../lib/SenseVoice/index.js"
 import karin, { YamlEditor, segment } from 'node-karin'
 import { getRecord } from "../lib/common/index.js"
 import { Config, basename } from '#template'
+import crypto from 'crypto'
 import fs from 'fs'
 
 export const study = karin.command(/^#学舌/, async (e) => {
@@ -11,10 +12,11 @@ export const study = karin.command(/^#学舌/, async (e) => {
     const record = await getRecord(e)
     if (record) {
       // 生成数据文件
-      if (!fs.existsSync(`./data/${basename}/list.yaml`)) {
-        fs.writeFileSync(`./data/${basename}/list.yaml`, 'config:\n  record:', 'utf8')
+      const cfgName = crypto.createHash('md5').update(Config.Config.API).digest('hex')
+      if (!fs.existsSync(`./data/${basename}/${cfgName}.yaml`)) {
+        fs.writeFileSync(`./data/${basename}/${cfgName}.yaml`, 'config:\n  record:', 'utf8')
       }
-      const yamlEditor = new YamlEditor(`./data/${basename}/list.yaml`)
+      const yamlEditor = new YamlEditor(`./data/${basename}/${cfgName}.yaml`)
       // 如果存在数据则直接切换
       if (yamlEditor.has(`files.${record.name}`)) {
         if (yamlEditor.has('config.record')) {
@@ -62,12 +64,13 @@ export const study = karin.command(/^#学舌/, async (e) => {
 
 export const recurrent = karin.command(/^:/, async (e) => {
   const msg = e.msg.replace(/^:/, '')
+  const cfgName = crypto.createHash('md5').update(Config.Config.API).digest('hex')
   // 如果没有配置则直接跳出
-  if (!fs.existsSync(`./data/${basename}/list.yaml`)) {
+  if (!fs.existsSync(`./data/${basename}/${cfgName}.yaml`)) {
     return
   }
   // 获取配置数据
-  const yamlEditor = new YamlEditor(`./data/${basename}/list.yaml`)
+  const yamlEditor = new YamlEditor(`./data/${basename}/${cfgName}.yaml`)
   const record = JSON.parse(yamlEditor.get(`files.${yamlEditor.get('config.record')}`))
   // 生成音频
   const result = await generateAudio({
