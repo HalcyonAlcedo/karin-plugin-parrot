@@ -101,6 +101,9 @@ export const recurrent = karin.command(/^:/, async (e) => {
       e.reply('诶~发不出来啊！')
     }
   } catch (error) {
+    // 删除失效配置
+    yamlEditor.del(`files.${yamlEditor.get('config.record')}`)
+    yamlEditor.save()
     // 音频接口失效
     e.reply('音频样本失效！')
   }
