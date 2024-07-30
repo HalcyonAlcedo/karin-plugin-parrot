@@ -73,30 +73,36 @@ export const recurrent = karin.command(/^:/, async (e) => {
   const yamlEditor = new YamlEditor(`./data/${basename}/${cfgName}.yaml`)
   const record = JSON.parse(yamlEditor.get(`files.${yamlEditor.get('config.record')}`))
   // 生成音频
-  const result = await generateAudio({
-    tts_text: msg,
-    mode_checkbox_group: "3s极速复刻",
-    sft_dropdown: "中文女",
-    prompt_text: record.prompt,
-    prompt_wav_upload: {
-      path: record.path,
-      url: `${Config.Config.API.endsWith('/') ? Config.Config.API : Config.Config.API + '/'}file=${record.path}`,
-      orig_name: record.name,
-      size: record.size,
-      mime_type: "audio/wav",
-      meta: { _type: "gradio.FileData" }
-    },
-    prompt_wav_record: null,
-    instruct_text: "",
-    seed: 0,
-    speed_factor: 1,
-  })
-  // 获取音频数据
-  const audio = await getAudio(result.data[0].path, true)
-  // 发送音频
-  if (await e.bot.SendApi('can_send_record')) {
-    e.reply(segment.record(`base64://${audio}`))
-  } else {
-    e.reply('诶~发不出来啊！')
+  try {
+    const result = await generateAudio({
+      tts_text: msg,
+      mode_checkbox_group: "3s极速复刻",
+      sft_dropdown: "中文女",
+      prompt_text: record.prompt,
+      prompt_wav_upload: {
+        path: record.path,
+        url: `${Config.Config.API.endsWith('/') ? Config.Config.API : Config.Config.API + '/'}file=${record.path}`,
+        orig_name: record.name,
+        size: record.size,
+        mime_type: "audio/wav",
+        meta: { _type: "gradio.FileData" }
+      },
+      prompt_wav_record: null,
+      instruct_text: "",
+      seed: 0,
+      speed_factor: 1,
+    })
+    // 获取音频数据
+    const audio = await getAudio(result.data[0].path, true)
+    // 发送音频
+    if (await e.bot.SendApi('can_send_record')) {
+      e.reply(segment.record(`base64://${audio}`))
+    } else {
+      e.reply('诶~发不出来啊！')
+    }
+  } catch (error) {
+    // 音频接口失效
+    e.reply('音频样本失效！')
   }
+
 })
